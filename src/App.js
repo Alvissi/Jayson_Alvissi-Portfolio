@@ -77,14 +77,14 @@ function App() {
 
           <div className="project-grid">
             <article className="project-card">
-              <img src="/siklab.png" alt="Project 1" />
+              <img src="/siklab.png" alt="" />
               <a href="https://www.figma.com/design/WSL2c4wKWHOZznEZpfeWP6/Siklab?node-id=848-549&t=nn4ZoPuWIWHRJkAU-1" className="project-link">
                 View Project
               </a>
             </article>
 
             <article className="project-card">
-              <img src="/todos.png" alt="Project 2" />
+              <img src="/todos.png" alt="" />
               <a href="https://awesometodosapp-lvhx.onrender.com" className="project-link">
                 View Project
               </a>
@@ -126,17 +126,17 @@ function App() {
 
           <div className="skills">
             <div className="skills-top">
-              <img src="/html.png" alt="HTML" />
-              <img src="/css.png" alt="CSS" />
-              <img src="/js.png" alt="JavaScript" />
-              <img src="/react.png" alt="React" />
+              <img src="/html.png" alt="" />
+              <img src="/css.png" alt="" />
+              <img src="/js.png" alt="" />
+              <img src="/react.png" alt="" />
             </div>
 
             <div className="skills-bottom">
-              <img src="/vscode.png" alt="VS Code" />
-              <img src="/git.png" alt="Git" />
-              <img src="/github.png" alt="GitHub" />
-              <img src="/figma.png" alt="Figma" />
+              <img src="/vscode.png" alt="" />
+              <img src="/git.png" alt="" />
+              <img src="/github.png" alt="" />
+              <img src="/figma.png" alt="" />
             </div>
           </div>
         </section>
