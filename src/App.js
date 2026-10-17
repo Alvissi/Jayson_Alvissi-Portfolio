@@ -1,15 +1,130 @@
+import { useEffect, useState } from "react";
 import "./styles.css";
+import HoloCard from "./HoloCard";
+import CircularCarousel from "./CircularCarousel";
+import LogoLoop from "./LogoLoop";
+
+const navItems = [
+  { id: "home", label: "Home" },
+  { id: "projects", label: "Projects" },
+  { id: "about", label: "About" },
+  { id: "contact", label: "Contact" },
+];
+
+const skillItems = [
+  { src: "/html.png", alt: "HTML", title: "HTML" },
+  { src: "/css.png", alt: "CSS", title: "CSS" },
+  { src: "/js.png", alt: "JavaScript", title: "JavaScript" },
+  { src: "/react.png", alt: "React", title: "React" },
+  { src: "/vscode.png", alt: "VS Code", title: "VS Code" },
+  { src: "/git.png", alt: "Git", title: "Git" },
+  { src: "/github.png", alt: "GitHub", title: "GitHub" },
+  { src: "/figma.png", alt: "Figma", title: "Figma" },
+];
+
+// Light placeholder shown for project slots that don't have an image yet.
+const blankPlaceholder = `data:image/svg+xml,${encodeURIComponent(
+  '<svg xmlns="http://www.w3.org/2000/svg" width="700" height="394">' +
+    '<rect width="100%" height="100%" fill="#d9d9d9"/>' +
+    '<text x="50%" y="50%" font-family="sans-serif" font-size="28" fill="#8a8a8a" text-anchor="middle" dominant-baseline="middle">Add Photo</text>' +
+    "</svg>"
+)}`;
+
+const projectItems = [
+  {
+    src: "/siklab.png",
+    alt: "Siklab project preview",
+    title: "Siklab",
+    subtitle: "Project 1",
+    href: "https://www.figma.com/design/WSL2c4wKWHOZznEZpfeWP6/Siklab?node-id=848-549&t=nn4ZoPuWIWHRJkAU-1",
+  },
+  {
+    src: "/todos.png",
+    alt: "To-Dos app preview",
+    title: "To-Dos App",
+    subtitle: "Project 2",
+    href: "https://awesometodosapp-lvhx.onrender.com",
+  },
+  {
+    src: "/pawloc.svg",
+    alt: "Pawloc app preview",
+    title: "Pawloc",
+    subtitle: "Project 3",
+    href: "https://pawloc.vercel.app/?fbclid=IwY2xjawUrN9pleHRuA2FlbQIxMABwZG9mBWJyaWQRMUN4NmhTQ2g2RnR0d1ZZZm1zcnRjBmFwcF9pZBAyMjIwMzkxNzg4MjAwODkyAAEeJvA7yYw8ZnuW-B-1BT8JKmgi1SpzsjZqy7rg--tED7GKgZSllXmprC0zVHI_aem_PKcoUTNC6wPe8bYD79Lxtw#/shelters",
+  },
+  {
+    src: "/portfolio.png",
+    alt: "Web Portfolio preview",
+    title: "Web Portfolio",
+    subtitle: "Project 4",
+    href: "https://jayson-alvissi-portfolio.vercel.app/"
+  },
+  {
+    src: "/devify.png",
+    alt: "Devify preview",
+    title: "Devify",
+    subtitle: "Project 5",
+    href: "https://www.figma.com/design/RcEAgcitjEzZQlW6RD0miK/DEVIFY?node-id=440-281&p=f&t=ZBUB80a3lGs8fXvV-0"
+  },
+  {
+    src: "/UIChallenge1.png",
+    alt: "Project 5 preview, not yet added",
+    title: "UI Challenge 1",
+    subtitle: "Project 6",
+    href: "https://www.figma.com/design/RFzAaYmWcYPVkQGZGe8c37/JaysonAlvissi_UIChallenge1?t=6GQ3KtGrg8D7TQzY-0"
+  },
+  {
+    src: "/UIChallenge2.png",
+    alt: "Project 5 preview, not yet added",
+    title: "UI Challenge 2",
+    subtitle: "Project 7",
+    href: "https://www.figma.com/design/ckNwrmnEIcjoejwR14s871/JaysonAlvissi_UIChallenge2?node-id=0-1&p=f&t=6GQ3KtGrg8D7TQzY-0"
+  },
+];
+
 function App() {
+  const [activeSection, setActiveSection] = useState("home");
+
+  useEffect(() => {
+    const sections = navItems
+      .map((item) => document.getElementById(item.id))
+      .filter(Boolean);
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        });
+      },
+      {
+        root: null,
+        rootMargin: "-45% 0px -50% 0px",
+        threshold: 0,
+      }
+    );
+
+    sections.forEach((section) => observer.observe(section));
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <>
       {/* NAVBAR */}
       <header className="navbar container">
         <div className="logo">Jayson Alvissi</div>
         <nav className="nav-links">
-          <a href="#home">Home</a>
-          <a href="#projects">Projects</a>
-          <a href="#about">About</a>
-          <a href="#contact">Contact</a>
+          {navItems.map((item) => (
+            <a
+              key={item.id}
+              href={`#${item.id}`}
+              className={activeSection === item.id ? "active" : ""}
+              onClick={() => setActiveSection(item.id)}
+            >
+              {item.label}
+            </a>
+          ))}
         </nav>
       </header>
 
@@ -27,7 +142,7 @@ function App() {
             </p>
 
             <div className="hero-actions">
-              <a className="btn" href="/MyResume.pdf" download>
+              <a className="btn" href="/Alvissi_Resume.pdf" download>
                 Download CV
               </a>
 
@@ -63,10 +178,21 @@ function App() {
             </div>
           </div>
 
-          <div className="hero-photo">     
-     <img src="/photo.png" alt="Photo portrait" />
-
-</div>
+          <div className="hero-photo">
+            <HoloCard
+              image="/photo.png"
+              alt="Jayson Alvissi portrait"
+              preset="bursts"
+              intensity={0.15}
+              glare={0.25}
+              edgeSparkle={0.5}
+              frame={6}
+              width={500}
+              radius={0}
+              tiltMax={12}
+              hoverScale={1.03}
+            />
+          </div>
         </section>
 
         <hr />
@@ -75,20 +201,26 @@ function App() {
         <section id="projects" className="projects container">
           <h2 className="section-title">Featured Projects</h2>
 
-          <div className="project-grid">
-            <article className="project-card">
-              <img src="/siklab.png" alt="" />
-              <a href="https://www.figma.com/design/WSL2c4wKWHOZznEZpfeWP6/Siklab?node-id=848-549&t=nn4ZoPuWIWHRJkAU-1" className="project-link">
-                View Project
-              </a>
-            </article>
-
-            <article className="project-card">
-              <img src="/todos.png" alt="" />
-              <a href="https://awesometodosapp-lvhx.onrender.com" className="project-link">
-                View Project
-              </a>
-            </article>
+          <div className="projects-carousel">
+            <CircularCarousel
+              items={projectItems}
+              preset="cylinder"
+              intro="rise"
+              cardWidth={460}
+              aspectRatio={16 / 9}
+              gap={60}
+              speed={10}
+              autoplay="drift"
+              pauseOnHover
+              captions
+              fadeColor="#eeeeee"
+              cornerRadius={14}
+              onItemClick={(item) => {
+                if (item.href) {
+                  window.open(item.href, "_blank", "noopener");
+                }
+              }}
+            />
           </div>
         </section>
 
@@ -124,20 +256,19 @@ function App() {
 
           <h3 className="cap-title">Capabilities</h3>
 
-          <div className="skills">
-            <div className="skills-top">
-              <img src="/html.png" alt="" />
-              <img src="/css.png" alt="" />
-              <img src="/js.png" alt="" />
-              <img src="/react.png" alt="" />
-            </div>
-
-            <div className="skills-bottom">
-              <img src="/vscode.png" alt="" />
-              <img src="/git.png" alt="" />
-              <img src="/github.png" alt="" />
-              <img src="/figma.png" alt="" />
-            </div>
+          <div className="skills-loop">
+            <LogoLoop
+              logos={skillItems}
+              speed={70}
+              direction="left"
+              logoHeight={72}
+              gap={64}
+              fadeOut
+              scaleOnHover
+              muted={1}
+              labels="hover"
+              ariaLabel="Tools and technologies"
+            />
           </div>
         </section>
 

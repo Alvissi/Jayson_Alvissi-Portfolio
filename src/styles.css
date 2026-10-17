@@ -6,11 +6,12 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 90px;
 }
 
 body {
   font-family: "Inter", sans-serif;
-  background: #eeeeee;
+  background: #fefefe;
   color: #1a1a1a;
   overflow-x: hidden;
 }
@@ -38,6 +39,10 @@ hr {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: #fefefe;
 }
 
 .logo {
@@ -52,9 +57,46 @@ hr {
 }
 
 .nav-links a {
+  position: relative;
   font-size: 32px;
   font-weight: 400;
   line-height: 1;
+  padding-bottom: 4px;
+  transition: color 0.25s ease, opacity 0.25s ease, transform 0.15s ease;
+}
+
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 2px;
+  background: #10aeb8;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.25s ease;
+}
+
+.nav-links a:hover {
+  color: #10aeb8;
+}
+
+.nav-links a:hover::after {
+  transform: scaleX(1);
+}
+
+.nav-links a:active {
+  transform: translateY(1px);
+  opacity: 0.8;
+}
+
+.nav-links a.active {
+  color: #10aeb8;
+}
+
+.nav-links a.active::after {
+  transform: scaleX(1);
 }
 
 /* HERO */
@@ -121,6 +163,19 @@ hr {
   font-weight: bold;
   border: 0;
   cursor: pointer;
+  transition: background-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.btn:hover {
+  background: #0e99a2;
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(16, 174, 184, 0.35);
+}
+
+.btn:active {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(16, 174, 184, 0.35);
+  opacity: 0.9;
 }
 
 .icons,
@@ -139,24 +194,25 @@ hr {
   justify-content: center;
   font-size: 40px;
   color: #1a1a1a;
+  transition: color 0.25s ease, transform 0.25s ease, opacity 0.25s ease;
+}
+
+.icons a:hover,
+.contact-icons a:hover {
+  color: #10aeb8;
+  transform: translateY(-4px);
+}
+
+.icons a:active,
+.contact-icons a:active {
+  transform: translateY(-1px);
+  opacity: 0.8;
 }
 
 .hero-photo {
   width: 500px;
-  height: 600px;
   justify-self: end;
-  .hero-photo {
-  position: relative;
-  overflow: visible; 
-}
-
-}
-
-.hero-photo img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
+  display: flex;
 }
 
 
@@ -204,6 +260,13 @@ hr {
   text-decoration: underline;
 }
 
+.projects-carousel {
+  position: relative;
+  width: 100%;
+  height: 620px;
+  cursor: pointer;
+}
+
 /* ABOUT */
 .about {
   padding: 80px 0;
@@ -228,6 +291,14 @@ hr {
   margin-bottom: 18px;
 }
 
+.skills-loop {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  height: 120px;
+  margin: 0 auto;
+}
+
 .skills {
   display: flex;
   flex-direction: column;
@@ -243,16 +314,30 @@ hr {
   align-items: center;
 }
 
-.skills-top img {
-  height: 120px;
+.skills-top img,
+.skills-bottom img {
   width: auto;
   display: block;
+  filter: grayscale(100%);
+  opacity: 0.6;
+  transition: filter 0.3s ease, opacity 0.3s ease, transform 0.3s ease,
+    drop-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.skills-top img {
+  height: 120px;
 }
 
 .skills-bottom img {
   height: 100px;
-  width: auto;
-  display: block;
+}
+
+.skills-top img:hover,
+.skills-bottom img:hover {
+  filter: grayscale(0%) drop-shadow(0 8px 16px rgba(16, 174, 184, 0.45));
+  opacity: 1;
+  transform: translateY(-10px) scale(1.12);
 }
 
 /* CONTACT */
@@ -309,12 +394,20 @@ hr {
     max-width: 700px;
   }
 
+  .projects-carousel {
+    height: 500px;
+  }
+
   .about-text {
     max-width: 100%;
   }
 }
 
 @media (max-width: 1024px) {
+  html {
+    scroll-padding-top: 70px;
+  }
+
   .nav-links a,
   .logo {
     font-size: 24px;
@@ -341,12 +434,15 @@ hr {
 
   .hero-photo {
     width: 420px;
-    height: 504px;
   }
 }
 
 /* MOBILE */
 @media (max-width: 768px) {
+  html {
+    scroll-padding-top: 140px;
+  }
+
   .navbar {
     height: auto;
     padding: 16px 0;
@@ -388,12 +484,7 @@ hr {
   .hero-photo {
     width: 100%;
     max-width: 420px;
-    height: auto;
-  }
-
-  .hero-photo img {
-    height: auto;
-    aspect-ratio: 5 / 6;
+    justify-content: center;
   }
 
   .project-card {
@@ -405,12 +496,20 @@ hr {
     aspect-ratio: 700 / 320;
   }
 
+  .projects-carousel {
+    height: 380px;
+  }
+
   .section-title {
     font-size: 40px;
   }
 
   .cap-title {
     font-size: 24px;
+  }
+
+  .skills-loop {
+    height: 90px;
   }
 
   .skills-top,
